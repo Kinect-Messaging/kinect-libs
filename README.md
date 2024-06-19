@@ -1,2 +1,2 @@
-# km-libs
+# kinect-libs
 Library functions for Kinect Messaging

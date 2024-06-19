@@ -1,0 +1,109 @@
+name: Main Branch CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [main]
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      - name: Fetching All
+        run: |
+          git fetch --prune --unshallow
+
+      # Install .NET Core as it is required by GitVersion action
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            3.1.x
+            5.0.x
+
+      # Install Git Version
+      - name: Installing GitVersion
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: '5.x'
+
+      # Use Git Version to compute version of the project
+      - name: Use GitVersion
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v1.1.1
+
+      # Setup Java environment
+      - name: Setup Java 17 env
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: 'maven'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      # Cache and restore Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2-
+
+      # For a maven artifact, set version to what was computed by GitVersion in earlier step
+      - name: Evaluate New Artifact Version
+        run: |
+          NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
+          echo "Artifact Semantic Version: $NEW_VERSION"
+          mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s $GITHUB_WORKSPACE/settings.xml
+
+      # Deploy artifact to repository. Could be ossrh, archiva etc.
+      - name: Build and Deploy with Maven
+#        env:
+#          ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
+#          ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
+        run: |
+#          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
+          mvn deploy --file pom.xml -s $GITHUB_WORKSPACE/settings.xml -DskipTests
+
+      # Optional step where I like to write the version number to a file in the project root.
+      - name: Upgrading Version
+        run: |
+          RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
+          echo $RELEASE_TAG > version.ver
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git config user.name ${{ github.actor }}
+          git add .
+          git commit -m "Upgraded Version >> $RELEASE_TAG" || true
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+  merge-develop:
+    name: Merge to Develop
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Fetching
+        run: |
+          git fetch --all
+      - name: Merge to Develop
+        uses: devmasx/merge-branch@v1.4.0
+        with:
+          type: now
+          target_branch: develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
