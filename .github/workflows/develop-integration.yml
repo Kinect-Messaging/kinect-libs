@@ -64,8 +64,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Fetching
-        run: |
-          git fetch --all
+        run: git fetch --all
 
       - name: Merge to Main
         uses: devmasx/merge-branch@v1.4.0
