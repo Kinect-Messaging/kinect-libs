@@ -45,6 +45,9 @@ jobs:
         with:
           java-version: 17
           distribution: 'temurin'
+          cache: 'maven'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       # Cache and restore Maven dependencies
       - name: Cache Maven packages
