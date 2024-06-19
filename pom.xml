@@ -8,10 +8,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.kinect.messaging</groupId>
-    <artifactId>km-libs</artifactId>
+    <artifactId>kinect-libs</artifactId>
     <version>1.0.0</version>
-    <name>km-libs</name>
+    <name>kinect-libs</name>
     <packaging>pom</packaging>
+    <properties>
+        <java.version>17</java.version>
+        <kotlin.version>1.9.22</kotlin.version>
+    </properties>
     <modules>
         <module>common-utils</module>
     </modules>
@@ -77,6 +81,42 @@
             <version>7.4</version>
         </dependency>
     </dependencies>
+    <build>
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <image>
+                        <env>
+                            <BP_JVM_VERSION>17</BP_JVM_VERSION>
+                        </env>
+                    </image>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <configuration>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                    </args>
+                    <compilerPlugins>
+                        <plugin>spring</plugin>
+                    </compilerPlugins>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
     <distributionManagement>
         <repository>
             <id>github</id>
