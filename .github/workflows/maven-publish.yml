@@ -5,16 +5,6 @@ name: Build & publish libs
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [ main, feature/** ]
-    paths:
-      - '**/src/**'
-      - '.github/workflows/maven-publish.yaml'
-  push:
-    branches: [ main, feature/** ]
-    paths:
-      - '**/src/**'
-      - '.github/workflows/maven-publish.yaml'
 
 jobs:
   build:

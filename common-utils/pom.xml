@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.kinect.messaging</groupId>
-        <artifactId>km-libs</artifactId>
+        <artifactId>kinect-libs</artifactId>
         <version>1.0.0</version>
     </parent>
     <groupId>com.kinect.messaging.libs</groupId>
