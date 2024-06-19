@@ -36,15 +36,15 @@ jobs:
       - name: Set Commit Message
         id: commit
         run: |
-          ${{ startsWith(github.head_ref, 'feature/') }} && echo ::set-output name=message::"+semver: feature" \
-          || echo ::set-output name=message::"+semver: patch"
+          ${{ startsWith(github.head_ref, 'feature/') }} && echo ::set-output name=message::"+semver: feature" \          
+          || echo "message=+semver: patch" >> $GITHUB_OUTPUT
 
       - name: Commit Build Message
         env:
           COMMIT_MSG: ${{ steps.commit.outputs.message }}
         run: |
-          git config user.email ${{ secrets.GIT_EMAIL }}
-          git config user.name ${{ secrets.GIT_USERNAME }}
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git config user.name ${{ github.actor }}
           git add .
           git commit -m "$COMMIT_MSG" --allow-empty || true
 

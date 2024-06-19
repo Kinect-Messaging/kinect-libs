@@ -66,9 +66,9 @@ jobs:
 
       # Deploy artifact to repository. Could be ossrh, archiva etc.
       - name: Build and Deploy with Maven
-        env:
-          ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
-          ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
+#        env:
+#          ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
+#          ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
         run: |
 #          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
           mvn deploy --file pom.xml -s $GITHUB_WORKSPACE/settings.xml -DskipTests
@@ -78,8 +78,8 @@ jobs:
         run: |
           RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
           echo $RELEASE_TAG > version.ver
-          git config user.email ${{ secrets.GIT_EMAIL }}
-          git config user.name ${{ secrets.GIT_USERNAME }}
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git config user.name ${{ github.actor }}
           git add .
           git commit -m "Upgraded Version >> $RELEASE_TAG" || true
 
