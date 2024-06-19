@@ -64,7 +64,7 @@ jobs:
       # For a maven artifact, set version to what was computed by GitVersion in earlier step
       - name: Evaluate New Artifact Version
         run: |
-          NEW_VERSION=${{ steps.gitversion.outputs.semVer }}
+          NEW_VERSION=${{ steps.gitversion.outputs.majorMinorPatch }}
           echo "Artifact Semantic Version: $NEW_VERSION"
           mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s $GITHUB_WORKSPACE/settings.xml
 
