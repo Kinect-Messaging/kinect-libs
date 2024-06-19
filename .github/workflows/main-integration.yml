@@ -11,6 +11,9 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -64,14 +67,10 @@ jobs:
           echo "Artifact Semantic Version: $NEW_VERSION"
           mvn versions:set -DnewVersion=${NEW_VERSION}-SNAPSHOT -s $GITHUB_WORKSPACE/settings.xml
 
-      # Deploy artifact to repository. Could be ossrh, archiva etc.
-      - name: Build and Deploy with Maven
-#        env:
-#          ARTIFACT_REPO_USERNAME: ${{ secrets.ARTIFACT_REPO_USERNAME }}
-#          ARTIFACT_REPO_PASSWORD: ${{ secrets.ARTIFACT_REPO_PASSWORD }}
-        run: |
-#          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
-          mvn deploy --file pom.xml -s $GITHUB_WORKSPACE/settings.xml -DskipTests
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy --file pom.xml -s $GITHUB_WORKSPACE/settings.xml -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       # Optional step where I like to write the version number to a file in the project root.
       - name: Upgrading Version
@@ -93,6 +92,8 @@ jobs:
     name: Merge to Develop
     needs: [build]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -105,5 +106,4 @@ jobs:
         with:
           type: now
           target_branch: develop
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
