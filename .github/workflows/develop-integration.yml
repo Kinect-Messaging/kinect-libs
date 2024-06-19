@@ -74,6 +74,5 @@ jobs:
         uses: devmasx/merge-branch@v1.4.0
         with:
           type: now
-          target_branch: 'main'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+          target_branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
