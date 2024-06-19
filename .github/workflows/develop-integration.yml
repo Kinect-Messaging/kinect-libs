@@ -37,7 +37,7 @@ jobs:
         id: commit
         run: |
           ${{ startsWith(github.head_ref, 'feature/') }} && echo ::set-output name=message::"+semver: feature" \          
-          || echo "message=+semver: patch" >> $GITHUB_OUTPUT
+          || echo ::set-output name=message::"+semver: patch"
 
       - name: Commit Build Message
         env:
