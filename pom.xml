@@ -121,7 +121,7 @@
         <repository>
             <id>github</id>
             <name>Kinect GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Kinect-Messaging/km-libs</url>
+            <url>https://maven.pkg.github.com/Kinect-Messaging/kinect-libs</url>
         </repository>
     </distributionManagement>
 </project>
