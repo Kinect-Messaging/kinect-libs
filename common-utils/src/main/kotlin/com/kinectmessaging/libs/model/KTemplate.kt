@@ -1,7 +1,7 @@
-package com.kinect.messaging.libs.model
+package com.kinectmessaging.libs.model
 
-import com.kinect.messaging.libs.model.TemplateType.CONTROL
-import com.kinect.messaging.libs.model.TemplateType.TREATMENT
+import com.kinectmessaging.libs.model.TemplateType.CONTROL
+import com.kinectmessaging.libs.model.TemplateType.TREATMENT
 
 data class KTemplate(
     val templateId: String,

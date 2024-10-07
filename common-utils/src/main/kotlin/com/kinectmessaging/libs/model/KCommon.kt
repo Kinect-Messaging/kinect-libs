@@ -1,4 +1,4 @@
-package com.kinect.messaging.libs.model
+package com.kinectmessaging.libs.model
 
 data class Audit(
     val createdBy: String,

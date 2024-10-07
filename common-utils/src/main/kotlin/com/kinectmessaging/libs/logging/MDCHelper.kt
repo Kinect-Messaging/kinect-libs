@@ -1,4 +1,4 @@
-package com.kinect.messaging.libs.logging
+package com.kinectmessaging.libs.logging
 
 import org.slf4j.MDC
 

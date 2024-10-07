@@ -1,4 +1,4 @@
-package com.kinect.messaging.libs.model
+package com.kinectmessaging.libs.model
 
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeBodyPart
