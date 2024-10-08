@@ -202,7 +202,8 @@
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>maven-central-release</id>
+            <id>central</id>
+            <name>Maven Central Release</name>
             <url>https://s01.oss.sonatype.org/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
