@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
