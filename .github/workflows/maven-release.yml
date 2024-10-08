@@ -25,6 +25,9 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: 'maven'
+          server-id: maven-central-release
+          server-username: ${{ secrets.NEXUS_USERNAME }}
+          server-password: ${{ secrets.NEXUS_PASSWORD }}
 
       # Cache and restore Maven dependencies
       - name: Cache Maven packages
