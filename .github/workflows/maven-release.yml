@@ -18,16 +18,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Setup Java environment
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'temurin'
-          cache: 'maven'
-          server-id: maven-central-release
-          server-username: ${{ secrets.NEXUS_USERNAME }}
-          server-password: ${{ secrets.NEXUS_PASSWORD }}
+      # Perform maven build
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
       # Cache and restore Maven dependencies
       - name: Cache Maven packages
@@ -56,11 +49,21 @@ jobs:
           git tag -a $version -m "$version"
           git push origin $version
 
-      # Publish maven artifact to Maven Central repository
-      - name: Release to Nexus Repository
-        uses: samuelmeuli/action-maven-publish@v1
+      # Setup Java environment
+      - name: Set up Apache Maven Central
+        uses: actions/setup-java@v4
         with:
-          gpg_private_key: ${{ secrets.GPG_SIGNING_KEY }}
-          gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          nexus_username: ${{ secrets.NEXUS_USERNAME }}
-          nexus_password: ${{ secrets.NEXUS_PASSWORD }}
+          distribution: 'temurin'
+          java-version: '17'
+          server-id: 'maven-central-release' # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: MAVEN_USERNAME # env variable for username in deploy
+          server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }} # Value of the GPG private key to import
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE # env variable for GPG private key passphrase
+
+      - name: Publish to Apache Maven Central
+        run: mvn deploy -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
