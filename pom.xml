@@ -190,7 +190,7 @@
                 <version>0.5.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <publishingServerId>central</publishingServerId>
+                    <publishingServerId>maven-central-release</publishingServerId>
                     <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
