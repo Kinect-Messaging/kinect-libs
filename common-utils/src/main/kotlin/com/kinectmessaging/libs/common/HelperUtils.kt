@@ -22,8 +22,8 @@ object DateUtils {
 
 object EmailUtils {
     @JvmStatic
-    fun isEmailValid(email: String): Boolean =
-        email.isNotBlank() && Pattern.compile(
+    fun isEmailValid(email: String?): Boolean =
+        email?.isNotBlank() == true && Pattern.compile(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
                     "\\@" +
                     "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
