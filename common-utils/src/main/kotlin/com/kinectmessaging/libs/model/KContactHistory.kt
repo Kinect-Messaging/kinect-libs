@@ -31,3 +31,9 @@ data class DeliveryStatus (
     val statusMessage: String?,
     val originalStatus: String?
 )
+
+enum class Status{
+    CREATED,
+    SENT,
+    DELIVERED
+}
