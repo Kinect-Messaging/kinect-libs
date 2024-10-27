@@ -27,12 +27,12 @@ data class EngagementStatus (
 
 data class DeliveryStatus (
     val statusTime: Date,
-    val status: String,
+    val status: HistoryStatusCodes,
     val statusMessage: String?,
     val originalStatus: String?
 )
 
-enum class Status{
+enum class HistoryStatusCodes{
     CREATED,
     SENT,
     DELIVERED
