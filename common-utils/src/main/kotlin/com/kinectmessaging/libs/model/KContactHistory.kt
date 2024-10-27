@@ -12,11 +12,11 @@ data class KContactHistory(
 
 data class ContactMessages (
     val messageId: String,
-    val deliveryTrackingId: String?,
+    var deliveryTrackingId: String?,
     val deliveryChannel: DeliveryChannel,
-    val contactAddress: String,
-    val deliveryStatus: List<DeliveryStatus>,
-    val engagementStatus: List<EngagementStatus>?
+    var contactAddress: String,
+    var deliveryStatus: List<DeliveryStatus>,
+    var engagementStatus: List<EngagementStatus>?
 )
 
 data class EngagementStatus (
