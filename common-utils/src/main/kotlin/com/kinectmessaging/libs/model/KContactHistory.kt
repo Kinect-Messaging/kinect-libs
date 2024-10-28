@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class KContactHistory(
     val id: String,
+    val sourceEventId: String,
     val journeyTransactionId: String,
     val journeyName: String,
     val messages: ContactMessages,
