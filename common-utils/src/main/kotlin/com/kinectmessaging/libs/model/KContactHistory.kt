@@ -35,5 +35,6 @@ data class DeliveryStatus (
 enum class HistoryStatusCodes{
     CREATED,
     SENT,
-    DELIVERED
+    DELIVERED,
+    FAILED,
 }
