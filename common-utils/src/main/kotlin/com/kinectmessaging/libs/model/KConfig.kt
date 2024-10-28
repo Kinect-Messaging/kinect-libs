@@ -1,7 +1,6 @@
 package com.kinectmessaging.libs.model
 
 import org.apache.commons.lang3.RandomStringUtils
-import javax.mail.internet.MimeBodyPart
 
 data class JourneyConfig(
     val journeyId: String,

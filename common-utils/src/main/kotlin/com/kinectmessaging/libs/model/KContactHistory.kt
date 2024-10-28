@@ -1,7 +1,6 @@
 package com.kinectmessaging.libs.model
 
-import java.util.*
-import kotlin.collections.List
+import java.time.LocalDateTime
 
 data class KContactHistory(
     val id: String,
@@ -20,13 +19,13 @@ data class ContactMessages (
 )
 
 data class EngagementStatus (
-    val engagementTime: Date,
+    val engagementTime: LocalDateTime,
     val engagementType: String,
     val engagementContext: String?
 )
 
 data class DeliveryStatus (
-    val statusTime: Date,
+    val statusTime: LocalDateTime,
     val status: HistoryStatusCodes,
     val statusMessage: String?,
     val originalStatus: String?
