@@ -2,7 +2,8 @@ package com.kinectmessaging.libs.common
 
 object ErrorConstants {
     const val NO_DATA_FOUND_MESSAGE = "No valid data found for the provided input(s): "
-    const val HTTP_5XX_ERROR_MESSAGE = "Error while processing request. Check the error message for more details: "
+    const val HTTP_5XX_ERROR_MESSAGE = "System error while processing request. Check the error message for more details: "
+    const val HTTP_4XX_ERROR_MESSAGE = "Error while processing request. Check the error message for more details: "
 }
 
 object LogConstants {
@@ -15,4 +16,5 @@ object Defaults{
     const val PAGE_NO = 0
     const val PAGE_SIZE = 20
     const val TRANSACTION_ID_HEADER = "X-Transaction-Id"
+    const val REQUEST_TIMEOUT = 60
 }
