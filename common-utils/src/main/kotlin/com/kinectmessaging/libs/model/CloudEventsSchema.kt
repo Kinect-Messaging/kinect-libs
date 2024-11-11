@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.JsonNode
 import java.time.LocalDateTime
 
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class CloudEventsSchema(
     @JsonProperty("specversion")
     val specVersion: String,
