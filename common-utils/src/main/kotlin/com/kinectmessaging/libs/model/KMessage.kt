@@ -20,7 +20,7 @@ data class EmailData (
     val htmlTemplateId: String,
     val senderAddress: String,
     val subject: String,
-    val toRecipients: List<Address>,
+    val toRecipients: List<InternetAddress>,
     val ccRecipients: List<InternetAddress>? = null,
     val bccRecipients: List<InternetAddress>? = null,
     val attachments: List<Attachment>? = null,
