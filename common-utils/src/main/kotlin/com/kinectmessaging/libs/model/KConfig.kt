@@ -65,7 +65,7 @@ data class AttachmentConfig (
 
 data class EnvConfig(
     val envId: String,
-    val envName: EnvNames,
+    val envName: List<EnvNames>,
     val journeyId: String,
     val messageId: String,
     val eventName: String,
