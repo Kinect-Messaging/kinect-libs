@@ -1,5 +1,7 @@
 package com.kinectmessaging.libs.model
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Audit(
     val createdBy: String,
     val createdTime: String,
@@ -7,18 +9,21 @@ data class Audit(
     val updatedTime: String?
 )
 
+@Serializable
 data class ChangeLog(
     val user: String,
     val time: String,
     val comment: String
 )
 
+@Serializable
 data class Contact (
     val email: String?,
     val phone: String?,
     val address: Address?
 )
 
+@Serializable
 data class Person(
     val firstName: String,
     val lastName: String?,
@@ -27,6 +32,7 @@ data class Person(
     val preferredLanguage: Map<TemplateLanguage, Int>? = mapOf(Pair(TemplateLanguage.EN, 1))
 )
 
+@Serializable
 data class Address(
     val addressLine1: String,
     val addressLine2: String?,
