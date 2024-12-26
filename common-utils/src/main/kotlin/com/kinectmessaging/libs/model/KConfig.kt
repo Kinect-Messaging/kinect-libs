@@ -1,10 +1,10 @@
 package com.kinectmessaging.libs.model
 
-import org.apache.commons.lang3.RandomStringUtils
+import com.kinectmessaging.libs.common.StringUtils
 
 data class JourneyConfig(
     val journeyId: String,
-    val journeyName: String = "Unnamed_Journey_${RandomStringUtils.randomAlphanumeric(1,4)}",
+    val journeyName: String = "Unnamed_Journey_${StringUtils.randomAlphaNumeric()}",
     val journeySteps: List<JourneySteps>?,
     val auditInfo: Audit
 )
@@ -12,13 +12,14 @@ data class JourneyConfig(
 data class JourneySteps (
     val seqId: Int,
     val eventName: String,
+    val eventType: EventType? = EventType.EVENT,
     val stepCondition: String?,
     val messageConfigs: Map<String, String>
 )
 
 data class MessageConfig(
     val messageId: String,
-    val messageName: String = "Unnamed_Message_${RandomStringUtils.randomAlphanumeric(1,4)}",
+    val messageName: String = "Unnamed_Message_${StringUtils.randomAlphaNumeric()}",
     val messageVersion: Int = 1,
     val messageCondition: String?,
     val messageStatus: MessageStatus? = MessageStatus.DRAFT,
@@ -27,6 +28,10 @@ data class MessageConfig(
     val auditInfo: Audit,
 )
 
+enum class EventType{
+    EVENT,
+    SCHEDULED
+}
 enum class MessageStatus {
     DRAFT,
     DEV,

@@ -1,4 +1,5 @@
 package com.kinectmessaging.libs.model
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -29,7 +30,7 @@ data class Person(
     val lastName: String?,
     val contacts: List<Contact>?,
     // Default preference is English. Priority is set to 1 as highest.
-    val preferredLanguage: Map<TemplateLanguage, Int>? = mapOf(Pair(TemplateLanguage.EN, 1))
+    val preferredLanguage: Map<Language, Int>? = mapOf(Pair(Language.EN, 1))
 )
 
 @Serializable
@@ -42,10 +43,22 @@ data class Address(
     val country: String
 )
 
+/**
+ * ISO 639-1 code for language
+ */
+@Serializable
+enum class Language {
+    EN //English
+    ,ES //Spanish
+}
+
+@Serializable
 enum class DeliveryChannel {
     EMAIL, SMS
 }
 
+@Serializable
 enum class TargetSystem {
     AZURE_COMMUNICATION_SERVICE, AWS_SIMPLE_EMAIL_SERVICE
 }
+

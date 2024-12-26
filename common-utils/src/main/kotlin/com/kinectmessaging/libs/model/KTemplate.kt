@@ -7,7 +7,7 @@ data class KTemplate(
     val templateId: String,
     val templateName: String,
     val templateType: TemplateType = CONTROL,
-    val templateLanguage: TemplateLanguage = TemplateLanguage.EN,
+    val templateLanguage: Language = Language.EN,
     val templateContent: String,
     val auditInfo: Audit
 )
@@ -18,13 +18,7 @@ data class TemplatePersonalizationRequest(
     val personalizationData: Map<String, Map<String, String?>?>?
 )
 
-/**
- * ISO 639-1 code for language
- */
-enum class TemplateLanguage {
-    EN //English
-    ,ES //Spanish
-}
+
 
 /**
  * Template type to be selected for application
