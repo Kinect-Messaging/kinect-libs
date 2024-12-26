@@ -3,6 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.kinectmessaging.libs</groupId>
     <artifactId>common-utils</artifactId>
+    <description>Common Utility classes and data models used by Kinect Messaging</description>
     <packaging>jar</packaging>
     <parent>
         <groupId>com.kinectmessaging</groupId>
