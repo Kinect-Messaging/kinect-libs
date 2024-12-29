@@ -1,9 +1,8 @@
 package com.kinectmessaging.libs.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import javax.mail.internet.InternetAddress
-import javax.mail.internet.MimeBodyPart
-
+import jakarta.mail.internet.InternetAddress
+import jakarta.mail.internet.MimeBodyPart
 
 data class KMessage(
     val id: String,
