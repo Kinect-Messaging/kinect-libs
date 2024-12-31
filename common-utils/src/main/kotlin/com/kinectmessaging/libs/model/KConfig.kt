@@ -1,7 +1,9 @@
 package com.kinectmessaging.libs.model
 
 import com.kinectmessaging.libs.common.StringUtils
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class JourneyConfig(
     val journeyId: String,
     val journeyName: String = "Unnamed_Journey_${StringUtils.randomAlphaNumeric()}",
@@ -9,6 +11,7 @@ data class JourneyConfig(
     val auditInfo: Audit
 )
 
+@Serializable
 data class JourneySteps (
     val seqId: Int,
     val eventName: String,
@@ -17,6 +20,7 @@ data class JourneySteps (
     val messageConfigs: Map<String, String>
 )
 
+@Serializable
 data class MessageConfig(
     val messageId: String,
     val messageName: String = "Unnamed_Message_${StringUtils.randomAlphaNumeric()}",
@@ -28,10 +32,13 @@ data class MessageConfig(
     val auditInfo: Audit,
 )
 
+@Serializable
 enum class EventType{
     EVENT,
     SCHEDULED
 }
+
+@Serializable
 enum class MessageStatus {
     DRAFT,
     DEV,
@@ -41,6 +48,7 @@ enum class MessageStatus {
     ARCHIVE
 }
 
+@Serializable
 data class EmailConfig (
     val targetSystem: TargetSystem,
     val emailHeaders: Map<String, String>?,
@@ -55,19 +63,21 @@ data class EmailConfig (
     val templateConfig: Map<String, String>
 )
 
+@Serializable
 data class EmailRecipientConfig (
     val firstName: String,
     val lastName: String,
     val emailAddress: String
 )
 
+@Serializable
 data class AttachmentConfig (
     val name: String,
     val contentType: String,
     val content: String
 )
 
-
+@Serializable
 data class EnvConfig(
     val envId: String,
     val envName: List<EnvNames>,
@@ -77,7 +87,7 @@ data class EnvConfig(
     val changeLog: List<ChangeLog>
 )
 
-
+@Serializable
 enum class EnvNames {
     DEV,
     STAGE,
