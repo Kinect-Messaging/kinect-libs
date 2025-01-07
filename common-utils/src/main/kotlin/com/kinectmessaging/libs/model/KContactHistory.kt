@@ -1,7 +1,10 @@
 package com.kinectmessaging.libs.model
 
+
+import kotlinx.serialization.Serializable
 import java.time.LocalDateTime
 
+@Serializable
 data class KContactHistory(
     val id: String,
     val sourceEventId: String,
@@ -10,6 +13,7 @@ data class KContactHistory(
     val messages: ContactMessages,
 )
 
+@Serializable
 data class ContactMessages (
     val messageId: String,
     var deliveryTrackingId: String?,
@@ -19,19 +23,22 @@ data class ContactMessages (
     var engagementStatus: List<EngagementStatus>?
 )
 
+@Serializable
 data class EngagementStatus (
-    val engagementTime: LocalDateTime,
+    @Serializable(with = LocalDateSerializer::class) val engagementTime: LocalDateTime,
     val engagementType: String,
     val engagementContext: String?
 )
 
+@Serializable
 data class DeliveryStatus (
-    val statusTime: LocalDateTime,
+    @Serializable(with = LocalDateSerializer::class) val statusTime: LocalDateTime,
     val status: HistoryStatusCodes,
     val statusMessage: String?,
     val originalStatus: String?
 )
 
+@Serializable
 enum class HistoryStatusCodes{
     CREATED,
     SENT,

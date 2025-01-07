@@ -1,6 +1,20 @@
 package com.kinectmessaging.libs.model
 
+import com.fasterxml.jackson.core.JsonFactory
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
+import jakarta.mail.internet.InternetAddress
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializer
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Serializable
 data class Audit(
@@ -62,3 +76,48 @@ enum class TargetSystem {
     AZURE_COMMUNICATION_SERVICE, AWS_SIMPLE_EMAIL_SERVICE
 }
 
+
+@OptIn(ExperimentalSerializationApi::class)
+@Serializer(forClass = LocalDateTime::class)
+class LocalDateSerializer : KSerializer<LocalDateTime> {
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+
+    override fun serialize(encoder: Encoder, value: LocalDateTime) {
+        encoder.encodeString(value.format(formatter))
+    }
+
+    override fun deserialize(decoder: Decoder): LocalDateTime {
+        return LocalDateTime.parse(decoder.decodeString(), formatter)
+    }
+}
+
+
+class InternetAddressSerializer : KSerializer<InternetAddress> {
+
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("InternetAddress", PrimitiveKind.STRING)
+
+        override fun serialize(encoder: Encoder, value: InternetAddress) {
+            encoder.encodeString(value.toString())
+        }
+
+        override fun deserialize(decoder: Decoder): InternetAddress {
+            return InternetAddress(decoder.decodeString())
+        }
+
+}
+
+class JsonNodeSerializer : KSerializer<JsonNode> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("JsonNode", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: JsonNode) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): JsonNode {
+        val mapper = ObjectMapper()
+        val factory: JsonFactory = mapper.factory
+        val parser: JsonParser = factory.createParser(decoder.decodeString())
+        return mapper.readTree(parser)
+    }
+
+}

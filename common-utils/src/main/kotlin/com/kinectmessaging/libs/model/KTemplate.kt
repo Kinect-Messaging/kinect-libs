@@ -2,7 +2,9 @@ package com.kinectmessaging.libs.model
 
 import com.kinectmessaging.libs.model.TemplateType.CONTROL
 import com.kinectmessaging.libs.model.TemplateType.TREATMENT
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class KTemplate(
     val templateId: String,
     val templateName: String,
@@ -12,6 +14,7 @@ data class KTemplate(
     val auditInfo: Audit
 )
 
+@Serializable
 data class TemplatePersonalizationRequest(
     val textTemplateId: String?,
     val htmlTemplateId: String?,
@@ -27,6 +30,7 @@ data class TemplatePersonalizationRequest(
  * @property TREATMENT - Represents treatment templates for A/B testing.
  * More than one treatment template can be assigned.
  */
+@Serializable
 enum class TemplateType {
     CONTROL, TREATMENT
 }
