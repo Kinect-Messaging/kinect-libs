@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.cloudevents.CloudEvent
 import jakarta.mail.internet.InternetAddress
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Serializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.time.LocalDateTime
@@ -133,26 +134,6 @@ class JsonNodeSerializer : KSerializer<JsonNode> {
         val factory: JsonFactory = mapper.factory
         val parser: JsonParser = factory.createParser(decoder.decodeString())
         return mapper.readTree(parser)
-    }
-
-}
-
-
-class CloudEventSerializer : KSerializer<CloudEvent> {
-
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("CloudEvent", PrimitiveKind.STRING)
-
-    override fun serialize(encoder: Encoder, value: CloudEvent) {
-        val mapper = ObjectMapper()
-        val cloudEventString = mapper.writeValueAsString(value)
-        encoder.encodeString(cloudEventString)
-    }
-
-    override fun deserialize(decoder: Decoder): CloudEvent {
-        val mapper = ObjectMapper()
-        val factory: JsonFactory = mapper.factory
-        val parser: JsonParser = factory.createParser(decoder.decodeString())
-        return mapper.readValue(parser, CloudEvent::class.java)
     }
 
 }
