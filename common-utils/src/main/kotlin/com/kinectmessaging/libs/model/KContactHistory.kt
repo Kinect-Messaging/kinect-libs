@@ -25,14 +25,14 @@ data class ContactMessages (
 
 @Serializable
 data class EngagementStatus (
-    @Serializable(with = LocalDateSerializer::class) val engagementTime: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class) val engagementTime: LocalDateTime,
     val engagementType: String,
     val engagementContext: String?
 )
 
 @Serializable
 data class DeliveryStatus (
-    @Serializable(with = LocalDateSerializer::class) val statusTime: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class) val statusTime: LocalDateTime,
     val status: HistoryStatusCodes,
     val statusMessage: String?,
     val originalStatus: String?
