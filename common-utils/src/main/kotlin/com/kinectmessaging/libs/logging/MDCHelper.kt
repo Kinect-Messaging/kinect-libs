@@ -1,6 +1,6 @@
 package com.kinectmessaging.libs.logging
 
-import org.slf4j.MDC
+import org.jboss.logging.MDC
 
 object MDCHelper {
     fun addMDC(headers: Map<String, String?>) {

@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.regex.Pattern
 
+const val STRING_LENGTH = 10
+val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
 object DateUtils {
     @JvmStatic
     fun toIsoLocalDateTimeFormat(date: Date): String{
@@ -32,4 +35,9 @@ object EmailUtils {
                     "[a-zA-Z0-9][a-zA-Z0-9\\-]{1,25}" +
                     ")+"
         ).matcher(email).matches()
+}
+
+object StringUtils {
+    @JvmStatic
+    fun randomAlphaNumeric() = List(STRING_LENGTH) { charPool.random() }.joinToString("")
 }

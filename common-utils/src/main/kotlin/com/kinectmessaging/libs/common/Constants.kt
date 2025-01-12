@@ -18,6 +18,7 @@ object Defaults {
     const val PAGE_SIZE = 20
     const val TRANSACTION_ID_HEADER = "X-Transaction-Id"
     const val REQUEST_TIMEOUT = 60
+    const val TRANSACTION_ID_MDC_KEY = "transactionId"
 }
 
 object CloudEventsHeaders {
