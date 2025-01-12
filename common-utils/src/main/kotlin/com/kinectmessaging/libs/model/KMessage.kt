@@ -1,9 +1,6 @@
 package com.kinectmessaging.libs.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import jakarta.mail.internet.InternetAddress
-import jakarta.mail.internet.MimeBodyPart
-import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -23,11 +20,11 @@ data class EmailData (
     val htmlTemplateId: String,
     val senderAddress: String,
     val subject: String,
-    val toRecipients: List<@Serializable(with = InternetAddressSerializer::class) InternetAddress>,
-    val ccRecipients: List<@Serializable(with = InternetAddressSerializer::class) InternetAddress>? = null,
-    val bccRecipients: List<@Serializable(with = InternetAddressSerializer::class) InternetAddress>? = null,
+    val toRecipients: List<Person>,
+    val ccRecipients: List<Person>? = null,
+    val bccRecipients: List<Person>? = null,
     val attachments: List<Attachment>? = null,
-    val replyTo: List<@Serializable(with = InternetAddressSerializer::class) InternetAddress>? = null,
+    val replyTo: List<Person>? = null,
     val personalizationData: Map<String, Map<String, String?>?>? = null,
 )
 
@@ -40,7 +37,7 @@ data class SmsData(
 data class Attachment (
     val name: String,
     val contentType: String,
-    @Contextual val content: MimeBodyPart
+    val content: String
 )
 
 
